@@ -1,0 +1,22 @@
+{
+  "name": "bot-v4",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/bot.js",
+  "scripts": {
+    "test": "node ."
+  },
+  "keywords": [],
+  "author": "Absolium",
+  "license": "ISC",
+  "dependencies": {
+    "@discordjs/rest": "^1.5.0",
+    "@napi-rs/canvas": "^0.1.36",
+    "canvacord": "^5.4.8",
+    "chalk": "^4.1.2",
+    "discord-api-types": "^0.37.35",
+    "discord.js": "^14.7.1",
+    "dotenv": "^16.0.3",
+    "mongoose": "^6.10.0"
+  }
+}
