@@ -41,6 +41,16 @@ module.exports = {
     const channelManager = require("../../functions/handlers/handleChannels")(
       client
     );
+    const allowedChannels = await client.getXPChannels(interaction.guild.id);
+    console.log(allowedChannels);
+    if (allowedChannels.includes(chan_id)) {
+      const perm = new EmbedBuilder()
+        .setColor("Blue")
+        .setDescription(
+          `:white_check_mark: This channel had already been allowed!`
+        );
+      return await interaction.editReply({ embeds: [perm], ephemeral: true });
+    }
     client.addChannel(interaction.guild.id, chan_id);
 
     const embed = new EmbedBuilder()

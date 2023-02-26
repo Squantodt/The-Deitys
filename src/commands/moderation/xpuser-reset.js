@@ -33,7 +33,7 @@ module.exports = {
     const { guildId } = interaction;
     const target = interaction.options.getUser("user");
 
-    levelSchema.deleteMany(
+    levelSchema.deleteOne(
       { Guild: guildId, user: target.id },
       async (err, data) => {
         const embed = new EmbedBuilder()

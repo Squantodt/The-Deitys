@@ -42,7 +42,10 @@ client.on("messageCreate", async (message) => {
   const { guild, author } = message;
   const channelsArray = await client.getXPChannels(guild.id);
 
-  if (!guild || author.bot) return;
+  if (author.bot || !guild) return;
+
+  const channel = message.channel;
+  const give = client.XP;
 
   levelSchema.findOne(
     { Guild: guild.id, User: author.id },
@@ -53,15 +56,13 @@ client.on("messageCreate", async (message) => {
         levelSchema.create({
           Guild: guild.id,
           User: author.id,
-          XP: 0,
+          XP: give,
           Level: 0,
         });
       }
     }
   );
 
-  const channel = message.channel;
-  const give = client.XP;
   const data = await levelSchema.findOne({ Guild: guild.id, User: author.id });
 
   if (!data) return;
