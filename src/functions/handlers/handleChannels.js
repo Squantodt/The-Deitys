@@ -22,6 +22,10 @@ module.exports = (client) => {
     const xpChannels = await xpChannelsModel.find({
       guildId,
     });
-    return xpChannels;
+    let channels = [];
+    for (const channel of xpChannels) {
+      channels.push(channel.channelId);
+    }
+    return channels;
   };
 };

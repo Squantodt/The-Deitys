@@ -38,7 +38,9 @@ client.login(token);
 
 const levelSchema = require("./schemas/level");
 client.on("messageCreate", async (message) => {
+  const channelManager = require("./functions/handlers/handleChannels")(client);
   const { guild, author } = message;
+  const channelsArray = await client.getXPChannels(guild.id);
 
   if (!guild || author.bot) return;
 
@@ -63,8 +65,10 @@ client.on("messageCreate", async (message) => {
   const data = await levelSchema.findOne({ Guild: guild.id, User: author.id });
 
   if (!data) return;
+  console.log(channelsArray);
+  console.log(channel.id);
   const requiredXP = data.Level * data.Level * 20 + 20;
-  if (data.canEarnXP()) {
+  if (data.canEarnXP() && channelsArray.includes(channel.id)) {
     if (data.XP + give >= requiredXP) {
       data.XP += give;
       data.Level += 1;

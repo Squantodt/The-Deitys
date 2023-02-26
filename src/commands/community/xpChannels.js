@@ -26,7 +26,7 @@ module.exports = {
 
     let channelNames = "";
     for (const channel of channelsArray) {
-      channelNames += client.channels.cache.get(channel.channelId).name + "\n";
+      channelNames += client.channels.cache.get(channel).name + "\n";
     }
 
     const embed = new EmbedBuilder()
