@@ -11,12 +11,11 @@ module.exports = {
     .setName("xp-reset")
     .setDescription("Resets ALL of the servers XP levels"),
   async execute(interaction) {
-    const perm = new EmbedBuilder().setColor(
-      "Blue".setDescription(
+    const perm = new EmbedBuilder()
+      .setColor("Blue")
+      .setDescription(
         `:white_check_mark: You don't have permissions to reset XP levels in this server!`
-      )
-    );
-
+      );
     if (
       !interaction.member.permissions.has(
         PermissionsBitField.Flags.Administrator

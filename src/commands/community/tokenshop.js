@@ -2,7 +2,9 @@ const { EmbedBuilder, SlashCommandBuilder } = require("discord.js");
 const { execute } = require("../../events/client/ready");
 
 module.exports = {
-  data: new SlashCommandBuilder().setName("shop").setDescription("Buy tokens"),
+  data: new SlashCommandBuilder()
+    .setName("tokenshop")
+    .setDescription("Buy tokens"),
   async execute(interaction, client) {
     const message = await interaction.deferReply();
 
@@ -18,5 +20,7 @@ module.exports = {
         { name: "Items", value: `${shopItems}` },
         { name: "Price", value: `${prices}` }
       );
+
+    await interaction.editReply({ embeds: [embed] });
   },
 };

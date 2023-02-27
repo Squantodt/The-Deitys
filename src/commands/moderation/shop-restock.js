@@ -14,6 +14,7 @@ module.exports = {
       option
         .setName("category")
         .setRequired(true)
+        .setDescription("The category of the product")
         .addChoices(
           { name: "Role", value: "Role" },
           { name: "WL", value: "Whitelist" }
@@ -45,7 +46,5 @@ module.exports = {
 
     const { guildId } = interaction;
     const category = interaction.options.getString("category");
-
-    const shopItem = new shopSchema();
   },
 };
