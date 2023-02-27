@@ -1,6 +1,6 @@
 const { Schema, model } = require("mongoose");
 
-const shopSchema = new Schema({
+const storeSchema = new Schema({
   Guild: String,
   type: String,
   price: Number,
@@ -8,11 +8,7 @@ const shopSchema = new Schema({
   amount: Number,
 });
 
-shopSchema.methods.canBuy = function () {
-  return this.amount > 0;
-};
-
-shopSchema.pre("save", function (next) {
+storeSchema.pre("save", function (next) {
   const now = new Date();
   if (!canBuy) {
     return;
@@ -20,4 +16,4 @@ shopSchema.pre("save", function (next) {
   next();
 });
 
-module.exports = model("shop", shopSchema);
+module.exports = model("shop", storeSchema);

@@ -26,7 +26,7 @@ module.exports = {
       })
       .limit(10);
 
-    if (!data) return await interaction.reply({ embeds: [embed1] });
+    if (data.length == 0) return await interaction.reply({ embeds: [embed1] });
 
     await interaction.deferReply();
 

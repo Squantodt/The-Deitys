@@ -1,9 +1,10 @@
 const { SlashCommandBuilder } = require("discord.js");
 const { execute } = require("../../events/client/ready");
+const shopSchema = require("../../schemas/shop");
 
 module.exports = {
   data: new SlashCommandBuilder()
-    .setName("shop")
+    .setName("store")
     .setDescription("Buy tokens, roles and whitelists")
     .addSubcommand((subcommand) =>
       subcommand
@@ -16,9 +17,16 @@ module.exports = {
         .setDescription("Exchange your tokens for whitelists.")
     ),
   async execute(interaction, client) {
-    const message = await interaction.deferReply({
-      fetchReply: true,
-    });
+    interaction.deferReply();
+    if (interaction.options.getSubcommand() === "roles") {
+      //do rol
+      const data = await shopSchema.findMany({
+        Guild: guild.id,
+        User: member.id,
+      });
+    } else if (interaction.options.getSubcommand() === "whitelists") {
+      //send embed for whitelists
+    }
 
     await interaction.editReply({ content: "Pong! " });
   },
