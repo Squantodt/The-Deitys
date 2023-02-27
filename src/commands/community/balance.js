@@ -33,7 +33,7 @@ module.exports = {
     const embed = new EmbedBuilder()
       .setColor("Blue")
       .setDescription(
-        `:white_check_mark: ${member} has not gotten coins yet...`
+        `:white_check_mark: ${member} has not earned any coins yet...`
       );
     if (!data) return await interaction.editReply({ embeds: [embed] });
 

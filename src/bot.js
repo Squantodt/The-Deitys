@@ -18,6 +18,7 @@ const client = new Client({
   ],
 });
 client.commands = new Collection();
+client.buttons = new collection();
 client.commandArray = [];
 
 const functionFulders = fs.readdirSync("./src/functions");
@@ -31,12 +32,14 @@ for (const folder of functionFulders) {
 
 client.handleEvents();
 client.handleCommands();
+client.handleComponents();
 client.login(token);
 (async () => {
   await connect(databaseToken).catch(console.error);
 })();
 
 const levelSchema = require("./schemas/level");
+const { collection } = require("./schemas/level");
 client.on("messageCreate", async (message) => {
   const channelManager = require("./functions/handlers/handleChannels")(client);
   const { guild, author } = message;
