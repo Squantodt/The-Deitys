@@ -20,8 +20,8 @@ module.exports = {
         .setRequired(true)
         .setDescription("The category of the product")
         .addChoices(
-          { name: "Role", value: "Role" },
-          { name: "WL", value: "Whitelist" }
+          { name: "Roles", value: "Roles" },
+          { name: "Whitelists", value: "Whitelists" }
         )
         .setRequired(true)
     )

@@ -24,11 +24,13 @@ module.exports = {
   async execute(interaction, client) {
     await interaction.deferReply();
     const { guild } = interaction;
+    const subcommand = interaction.options.getSubcommand();
+
     if (interaction.options.getSubcommand() === "roles") {
       //do rol
-      const data = await shopSchema.find({
+      const data = await shopSchema.deleteMany({
         Guild: guild.id,
-        Cat: interaction.options.getSubcommand(),
+        Cat: "Role",
       });
       console.log(data);
     } else if (interaction.options.getSubcommand() === "whitelists") {
