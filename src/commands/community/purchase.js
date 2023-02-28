@@ -1,24 +1,43 @@
-const { EmbedBuilder, SlashCommandBuilder } = require("discord.js");
+const {
+  SlashCommandBuilder,
+  StringSelectMenuBuilder,
+  ActionRowBuilder,
+  SelectMenuOptionBuilder,
+} = require("discord.js");
 const { execute } = require("../../events/client/ready");
 
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("purchase")
-    .setDescription("Purchase tokens, whitelists and roles from the store"),
+    .setDescription("Return a select menu"),
   async execute(interaction, client) {
     const message = await interaction.deferReply();
 
-    const shopItems =
-      "10 tokens \n" + "30 tokens \n" + "70 tokens \n" + "100 tokens";
-    const prices = "5 levels \n" + "7 levels \n" + "10 levels \n" + "13 levels";
+    const menu = new StringSelectMenuBuilder()
+      .setCustomId(`purchase-menu`)
+      .setPlaceholder("Select what you want to purchase:")
+      .setMinValues(1)
+      .setMaxValues(1)
+      .addOptions([
+        {
+          label: "Tokens",
+          description: "Purchase tokens from the shop",
+          value: "Tokens",
+        },
+        {
+          label: "Roles",
+          description: "Purchase roles from the shop",
+          value: "Roles",
+        },
+        {
+          label: "Whitelists",
+          description: "Purchase whitelists from the shop",
+          value: "Whitelists",
+        },
+      ]);
 
-    const embed = new EmbedBuilder()
-      .setTitle("Purchase item")
-      .setDescription("What do you want to purchase?")
-      .setColor("Blue");
-
-    conse;
-
-    await interaction.editReply({ embeds: [embed] });
+    await interaction.editReply({
+      components: [new ActionRowBuilder().addComponents(menu)],
+    });
   },
 };
