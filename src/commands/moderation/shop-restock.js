@@ -58,7 +58,7 @@ module.exports = {
     const name = interaction.options.getString("name");
     const price = interaction.options.getNumber("price");
     const amount = interaction.options.getInteger("amount");
-    console.log("more test");
+
     storeSchema.findOne(
       {
         Guild: guild.id,

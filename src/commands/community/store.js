@@ -26,15 +26,75 @@ module.exports = {
     const { guild } = interaction;
     const subcommand = interaction.options.getSubcommand();
 
+    const data = await shopSchema.find({
+      Guild: guild.id,
+    });
+
+    const embed1 = new EmbedBuilder()
+      .setColor("Blue")
+      .setTitle(`Role Store!`)
+      .setDescription(`Nothing to see here yet...`)
+      .setTimestamp()
+      .setFooter({ text: "Store" });
+
+    if (data.length == 0)
+      return await interaction.editReply({ embeds: [embed1] });
     if (interaction.options.getSubcommand() === "roles") {
-      //do rol
-      const data = await shopSchema.deleteMany({
-        Guild: guild.id,
-        Cat: "Role",
-      });
-      console.log(data);
+      const results = data.filter((data) => data.Cat == "Roles");
+      if (results.length == 0)
+        return await interaction.editReply({ embeds: [embed1] });
+      let roles = "";
+      let prices = "";
+      let amount = "";
+
+      for (const result of results) {
+        roles += result.Name + "\n";
+        prices += result.Price + "\n";
+        amount += result.Amount + "\n";
+      }
+
+      const embedRoleStore = new EmbedBuilder()
+        .setColor("Blue")
+        .setTitle(`Role Store`)
+        .setDescription(`Overview of roles available for purchase`)
+        .addFields(
+          { name: "Roles", value: roles, inline: true },
+          { name: "Price", value: prices, inline: true },
+          { name: "Amount", value: amount, inline: true }
+        )
+        .setTimestamp()
+        .setFooter({ text: "Role store" });
+
+      return await interaction.editReply({ embeds: [embedRoleStore] });
     } else if (interaction.options.getSubcommand() === "whitelists") {
       //send embed for whitelists
+
+      const results = data.filter((data) => data.Cat == "Whitelists");
+      if (results.length == 0)
+        return await interaction.editReply({ embeds: [embed1] });
+      let names = "";
+      let prices = "";
+      let amount = "";
+
+      for (const result of results) {
+        names += result.Name + "\n";
+        prices += result.Price + "\n";
+        amount += result.Amount + "\n";
+      }
+
+      const embedWlStore = new EmbedBuilder()
+        .setColor("Blue")
+        .setTitle(`Role Store`)
+        .setDescription(`Overview of roles available for purchase`)
+        .addFields(
+          { name: "Proj Name", value: names, inline: true },
+          { name: "Price", value: prices, inline: true },
+          { name: "Amount", value: amount, inline: true }
+        )
+        .setTimestamp()
+        .setFooter({ text: "Role store" });
+
+      return await interaction.editReply({ embeds: [embedWlStore] });
     } else if (interaction.options.getSubcommand() === "tokens") {
       const shopItems =
         "10 tokens \n" + "30 tokens \n" + "70 tokens \n" + "100 tokens";
