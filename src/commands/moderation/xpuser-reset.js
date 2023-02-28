@@ -36,6 +36,7 @@ module.exports = {
     levelSchema.deleteOne(
       { Guild: guildId, user: target.id },
       async (err, data) => {
+        console.log(data);
         const embed = new EmbedBuilder()
           .setColor("Blue")
           .setDescription(

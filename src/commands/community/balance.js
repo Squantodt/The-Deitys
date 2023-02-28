@@ -3,7 +3,7 @@ const {
   EmbedBuilder,
   AttachmentBuilder,
 } = require("discord.js");
-const walletSchema = require("../../schemas/wallet.js");
+const walletSchema = require("../../schemas/wallet");
 const canvaCord = require("canvacord");
 
 module.exports = {
@@ -27,7 +27,7 @@ module.exports = {
 
     const data = await walletSchema.findOne({
       Guild: guild.id,
-      User: member.id,
+      User: user.id,
     });
 
     const embed = new EmbedBuilder()
@@ -36,15 +36,14 @@ module.exports = {
         `:white_check_mark: ${member} has not earned any coins yet...`
       );
     if (!data) return await interaction.editReply({ embeds: [embed] });
-
+    console.log(data);
     const embed2 = new EmbedBuilder()
       .setColor("Blue")
       .setTitle(`${member.user.username}'s balance`)
-      .setDescription(`${data.coins}`);
+      .setDescription(`${data.Coins} coins`);
 
     await interaction.editReply({
       embeds: [embed2],
-      files: [attachment],
     });
   },
 };
