@@ -60,7 +60,6 @@ module.exports = {
       },
       async (err, data) => {
         if (err) throw err;
-        console.log(data);
         if (!data) {
           await walletSchema.create({
             Guild: guild.id,
