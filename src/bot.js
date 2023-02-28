@@ -18,6 +18,8 @@ const client = new Client({
   ],
 });
 client.commands = new Collection();
+client.buttons = new Collection();
+client.selectMenus = new Collection();
 client.commandArray = [];
 
 const functionFulders = fs.readdirSync("./src/functions");
@@ -31,6 +33,7 @@ for (const folder of functionFulders) {
 
 client.handleEvents();
 client.handleCommands();
+client.handleComponents();
 client.login(token);
 (async () => {
   await connect(databaseToken).catch(console.error);
@@ -67,8 +70,6 @@ client.on("messageCreate", async (message) => {
   const data = await levelSchema.findOne({ Guild: guild.id, User: author.id });
 
   if (!data) return;
-  console.log(channelsArray);
-  console.log(channel.id);
   const requiredXP = data.Level * data.Level * 20 + 20;
   if (data.canEarnXP() && channelsArray.includes(channel.id)) {
     if (data.XP + give >= requiredXP) {
