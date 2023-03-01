@@ -14,7 +14,7 @@ module.exports = {
         .setRequired(true)
     ),
   async execute(interaction, client) {
-    const message = await interaction.deferReply();
+    const message = await interaction.deferReply({ ephemeral: true });
 
     const address = interaction.options.getString("walletaddress");
     const { user, guild } = interaction;
