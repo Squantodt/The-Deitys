@@ -62,6 +62,7 @@ client.on("messageCreate", async (message) => {
           User: author.id,
           XP: give,
           Level: 0,
+          TotalXP: give,
         });
       }
     }
@@ -73,7 +74,8 @@ client.on("messageCreate", async (message) => {
   const requiredXP = data.Level * data.Level * 20 + 20;
   if (data.canEarnXP() && channelsArray.includes(channel.id)) {
     if (data.XP + give >= requiredXP) {
-      data.XP += give;
+      data.XP += give - requiredXP;
+      data.TotalXP += give;
       data.Level += 1;
       await data.save();
 
@@ -86,6 +88,7 @@ client.on("messageCreate", async (message) => {
       channel.send({ embeds: [embed] });
     } else {
       data.XP += give;
+      data.TotalXP += give;
       data.save();
     }
   }

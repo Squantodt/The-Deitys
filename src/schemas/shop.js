@@ -6,6 +6,7 @@ const storeSchema = new Schema({
   Cat: String,
   Price: Number,
   Amount: Number,
+  Tokens: Number,
 });
 
 module.exports = model("shop", storeSchema);

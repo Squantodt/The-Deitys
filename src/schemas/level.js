@@ -9,6 +9,7 @@ const levelSchema = new Schema({
     type: Date,
     default: Date.now(),
   },
+  TotalXP: Number,
 });
 
 levelSchema.methods.canEarnXP = function () {
