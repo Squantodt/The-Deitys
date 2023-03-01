@@ -45,11 +45,10 @@ module.exports = {
         menuOptions.push(menuOption);
       }
     }
-    console.log(menuOptions);
 
     const roleMenu = new StringSelectMenuBuilder()
       .setCustomId(`purchase-item`)
-      .setPlaceholder("Purchase roles")
+      .setPlaceholder(`Purchase ${interaction.values[0]}`)
       .setMinValues(1)
       .setMaxValues(1)
       .addOptions(menuOptions);
