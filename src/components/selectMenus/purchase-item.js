@@ -1,6 +1,7 @@
 const shopSchema = require("../../schemas/shop");
 const walletSchema = require("../../schemas/wallet");
 const levelSchema = require("../../schemas/level");
+const wlSchema = require("../../schemas/whitelist");
 const {
   EmbedBuilder,
   ActionRowBuilder,
@@ -13,7 +14,7 @@ module.exports = {
     name: `purchase-item`,
   },
   async execute(interaction, client) {
-    const { guild, user } = interaction;
+    const { guild, user, member } = interaction;
     const item = await shopSchema.findOne({
       _id: interaction.values[0],
     });
@@ -86,27 +87,86 @@ module.exports = {
       if (!wallet || wallet.Coins < item.Price)
         return await interaction.update({ embeds: [poorEmbed] });
 
-      if (interaction.values[0] === "Whitelists") {
-        //Take coins
-        wallet.Coins -= item.Price;
-        await wallet.save();
+      if (item.Cat === "Whitelists") {
+        const errorAddressEmbed = new EmbedBuilder()
+          .setColor("Blue")
+          .setTitle("Purchase failed")
+          .setDescription(
+            `No wallet address set. Please use /setaddress for this.`
+          );
 
-        //Purchase whitelist
+        const errorAlreadyBoughtEmbed = new EmbedBuilder()
+          .setColor("Blue")
+          .setTitle("Purchase failed")
+          .setDescription(
+            `This wallet address has already bought this whitelist.`
+          );
+        if (!wallet.Address)
+          return await interaction.update({ embeds: [poorEmbed] });
 
-        //Delete item if amount = 0
-        item.Amount -= 1;
-        if (item.Amount === 0) {
-          await shopSchema.deleteOne(item);
-        } else {
-          item.save();
-        }
-      } else if (interaction.values[0] == "Roles") {
+        //write check if not already purchased
+        await wlSchema.findOne(
+          {
+            Guild: guild.id,
+            ItemId: item._id,
+            Address: Address,
+          },
+          async (err, data) => {
+            if (err) throw err;
+            //Purchase whitelist if not bought yet
+            if (!data) {
+              //Take coins
+              wallet.Coins -= item.Price;
+              await wallet.save();
+
+              await wlSchema.create({
+                Guild: guild.id,
+                User: user.id,
+                Address: wallet.Address,
+                ItemId: item._id,
+              });
+              //Delete item if amount = 0
+              item.Amount -= 1;
+              if (item.Amount === 0) {
+                await shopSchema.deleteOne(item);
+                //send list in predestined channel
+              } else {
+                item.save();
+              }
+              //give wl role
+              const role = guild.roles.cache.find((r) => r.name === item.Name);
+              member.roles.add(role).catch(console.error);
+            } else {
+              return await interaction.update({
+                embeds: [errorAlreadyBoughtEmbed],
+              });
+            }
+          }
+        );
+
+        //return good message
+        const successEmbed = new EmbedBuilder()
+          .setColor("Blue")
+          .setTitle("Purchase completed")
+          .setDescription(
+            `You have successfully bought role: ${item.Name} for ${item.Price} Belief.`
+          );
+
+        return await interaction.update({
+          embeds: [successEmbed],
+          components: [],
+        });
+      } else if (item.Cat == "Roles") {
+        //write check if role already bought
+
         //Take coins
         wallet.Coins -= item.Price;
         await wallet.save();
 
         //Give role
-
+        const role = guild.roles.cache.find((r) => r.name === item.Name);
+        member.roles.add(role).catch(console.error);
+        console.log(role);
         //Delete item if amount = 0
         item.Amount -= 1;
         if (item.Amount === 0) {
@@ -114,6 +174,18 @@ module.exports = {
         } else {
           item.save();
         }
+
+        const successEmbed = new EmbedBuilder()
+          .setColor("Blue")
+          .setTitle("Purchase completed")
+          .setDescription(
+            `You have successfully bought role: ${item.Name} for ${item.Price} Belief.`
+          );
+
+        return await interaction.update({
+          embeds: [successEmbed],
+          components: [],
+        });
       }
     }
 
