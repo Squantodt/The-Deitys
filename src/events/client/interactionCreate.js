@@ -1,3 +1,5 @@
+const { InteractionType } = require("discord.js");
+
 module.exports = {
   name: "interactionCreate",
   async execute(interaction, client) {
@@ -10,10 +12,16 @@ module.exports = {
         await command.execute(interaction, client);
       } catch (error) {
         console.log(error);
-        await interaction.reply({
-          content: "Something went wrong while executing this command....",
-          ephemeral: true,
-        });
+        try {
+          await interaction.reply({
+            content: "Something went wrong while executing this command....",
+            ephemeral: true,
+          });
+        } catch (err) {
+          await interaction.editReply({
+            content: "Something went wrong while executing this command....",
+          });
+        }
       }
     } else if (interaction.isButton()) {
       const { buttons } = client;
@@ -34,6 +42,17 @@ module.exports = {
 
       try {
         await menu.execute(interaction, client);
+      } catch (error) {
+        console.error(error);
+      }
+    } else if (interaction.type == InteractionType.ModalSubmit) {
+      const { modals } = client;
+      const { customId } = interaction;
+      const modal = modals.get(customId);
+      if (!modal) return new Error("There is no code for this modal");
+
+      try {
+        await modal.execute(interaction, client);
       } catch (error) {
         console.error(error);
       }

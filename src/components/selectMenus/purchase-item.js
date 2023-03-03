@@ -6,6 +6,9 @@ const {
   EmbedBuilder,
   ActionRowBuilder,
   StringSelectMenuBuilder,
+  ModalBuilder,
+  TextInputBuilder,
+  TextInputStyle,
 } = require("discord.js");
 const shop = require("../../schemas/shop");
 
@@ -36,7 +39,10 @@ module.exports = {
 
     if (item.Cat === "Tokens") {
       if (userLevel.TotalXP < item.Price)
-        return await interaction.update({ embeds: [poorEmbed] });
+        return await interaction.update({
+          embeds: [poorEmbed],
+          components: [],
+        });
 
       userLevel.TotalXP -= item.Price;
 
@@ -85,7 +91,10 @@ module.exports = {
       });
     } else {
       if (!wallet || wallet.Coins < item.Price)
-        return await interaction.update({ embeds: [poorEmbed] });
+        return await interaction.update({
+          embeds: [poorEmbed],
+          components: [],
+        });
 
       if (item.Cat === "Whitelists") {
         const errorAddressEmbed = new EmbedBuilder()
@@ -143,6 +152,22 @@ module.exports = {
             }
           }
         );
+
+        //Show modal
+        const modal = new ModalBuilder()
+          .setCustomId(`walletmodal`)
+          .setTitle(`${item.Name}`);
+
+        const txtInput = new TextInputBuilder()
+          .setCustomId("wallet")
+          .setLabel("Your wallet address:")
+          .setRequired(true)
+          .setMinLength(42)
+          .setMaxLength(42);
+
+        modal.addComponents(new ActionRowBuilder().addComponents(txtInput));
+
+        return await interaction.showModal(modal);
 
         //return good message
         const successEmbed = new EmbedBuilder()

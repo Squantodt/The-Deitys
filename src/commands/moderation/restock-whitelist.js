@@ -45,7 +45,7 @@ module.exports = {
       return await interaction.editReply({ embeds: [perm], ephemeral: true });
 
     const { guild } = interaction;
-    const category = "Roles";
+    const category = "Whitelist";
     const name = interaction.options.getString("name");
     const price = interaction.options.getInteger("price");
     const amount = interaction.options.getInteger("amount");
@@ -71,7 +71,7 @@ module.exports = {
         if (!data) {
           //
           const role = await guild.roles.create({ name: name });
-          console.log(role);
+
           return await storeSchema.create({
             Guild: guild.id,
             Name: name,

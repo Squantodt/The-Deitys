@@ -11,7 +11,8 @@ module.exports = {
     .setName("purchase")
     .setDescription("Return a select menu"),
   async execute(interaction, client) {
-    const message = await interaction.deferReply();
+    console.log(interaction);
+    await interaction.deferReply();
 
     const menu = new StringSelectMenuBuilder()
       .setCustomId(`purchase-menu`)

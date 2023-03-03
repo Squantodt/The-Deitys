@@ -10,8 +10,7 @@ module.exports = {
     name: `purchase-menu`,
   },
   async execute(interaction, client) {
-    message = interaction.message;
-    const { guild } = interaction;
+    const { guild, message } = interaction;
     const data = await shopSchema.find({
       Guild: guild.id,
     });
@@ -24,7 +23,7 @@ module.exports = {
       .setFooter({ text: "Store" });
 
     const results = data.filter((data) => data.Cat == interaction.values[0]);
-
+    console.log(data);
     if (results.length == 0)
       return await interaction.update({ embeds: [embed1], components: [] });
 

@@ -4,7 +4,6 @@ const wlSchema = new Schema({
   Guild: String,
   User: String,
   ItemId: Number,
-  Address: String,
 });
 
 wlSchema.methods.canEarnXP = function () {
