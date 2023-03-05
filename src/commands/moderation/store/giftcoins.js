@@ -3,7 +3,7 @@ const {
   EmbedBuilder,
   PermissionsBitField,
 } = require("discord.js");
-const walletSchema = require("../../schemas/wallet");
+const walletSchema = require("../../../schemas/wallet");
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -77,7 +77,7 @@ module.exports = {
       .setColor("Blue")
       .setTitle(`Gift coins!`)
       .setDescription(
-        `You have successfully gifted ${amount} of coins to ${interaction.user.tag}`
+        `You have successfully gifted ${amount} <:faith:1081970270564257912> to ${interaction.user.tag}`
       )
       .setTimestamp()
       .setFooter({ text: "Product restock" });

@@ -5,7 +5,6 @@ const {
   TextInputBuilder,
   TextInputStyle,
 } = require("discord.js");
-const { execute } = require("../../events/client/ready");
 
 module.exports = {
   data: new SlashCommandBuilder()

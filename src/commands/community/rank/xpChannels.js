@@ -11,9 +11,8 @@ module.exports = {
   async execute(interaction, client) {
     await interaction.deferReply();
 
-    const channelManager = require("../../functions/handlers/handleChannels")(
-      client
-    );
+    const channelManager =
+      require("../../../functions/handlers/handleChannels")(client);
     const channelsArray = await client.getXPChannels(interaction.guild.id);
     if (channelsArray.length === 0) {
       const embed = new EmbedBuilder()

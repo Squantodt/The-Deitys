@@ -3,7 +3,7 @@ const {
   EmbedBuilder,
   AttachmentBuilder,
 } = require("discord.js");
-const walletSchema = require("../../schemas/wallet");
+const walletSchema = require("../../../schemas/wallet");
 const canvaCord = require("canvacord");
 
 module.exports = {
@@ -39,7 +39,7 @@ module.exports = {
     const embed2 = new EmbedBuilder()
       .setColor("Blue")
       .setTitle(`${member.user.username}'s balance`)
-      .setDescription(`${data.Coins} coins`);
+      .setDescription(`${data.Coins} <:faith:1081970270564257912>`);
 
     await interaction.editReply({
       embeds: [embed2],

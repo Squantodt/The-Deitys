@@ -6,12 +6,12 @@ const {
 
 module.exports = {
   data: new SlashCommandBuilder()
-    .setName("xpchannelremove")
-    .setDescription("Removes a channel XP can be earned in")
+    .setName("xpchanneladd")
+    .setDescription("Adds a channel XP can be earned in")
     .addStringOption((option) =>
       option
         .setName("channelid")
-        .setDescription("The ID of the channel you wish to remove")
+        .setDescription("The ID of the channel you wish to add")
         .setRequired(true)
     ),
   async execute(interaction, client) {
@@ -19,7 +19,7 @@ module.exports = {
     const perm = new EmbedBuilder()
       .setColor("Blue")
       .setDescription(
-        `:warning: You don't have permissions to remove a channel!`
+        `:white_check_mark: You don't have permissions to add a channel!`
       );
 
     if (
@@ -38,15 +38,23 @@ module.exports = {
       return await interaction.editReply({ embeds: [perm], ephemeral: true });
     }
 
-    const channelManager = require("../../functions/handlers/handleChannels")(
-      client
-    );
-    client.removeChannel(interaction.guild.id, chan_id);
+    const channelManager =
+      require("../../../functions/handlers/handleChannels")(client);
+    const allowedChannels = await client.getXPChannels(interaction.guild.id);
+    if (allowedChannels.includes(chan_id)) {
+      const perm = new EmbedBuilder()
+        .setColor("Blue")
+        .setDescription(
+          `:white_check_mark: This channel had already been allowed!`
+        );
+      return await interaction.editReply({ embeds: [perm], ephemeral: true });
+    }
+    client.addChannel(interaction.guild.id, chan_id);
 
     const embed = new EmbedBuilder()
       .setColor("Blue")
       .setDescription(
-        `:white_check_mark: This channel has been successfully removed`
+        `:white_check_mark: This channel has been successfully added`
       );
 
     interaction.editReply({ embeds: [embed] });

@@ -4,30 +4,22 @@ const {
   AttachmentBuilder,
   PermissionsBitField,
 } = require("discord.js");
-const storeSchema = require("../../schemas/shop");
+const storeSchema = require("../../../schemas/shop");
 
 module.exports = {
   data: new SlashCommandBuilder()
-    .setName("restock-whitelist")
-    .setDescription("Restock the shop with roles and whitelists.")
-    .addStringOption((option) =>
-      option
-        .setName("name")
-        .setDescription(
-          "Project name. A role will be created under the same name."
-        )
-        .setRequired(true)
-    )
+    .setName("store-restock-tokens")
+    .setDescription("Restock the shop with tokens users can buy with XP.")
     .addIntegerOption((option) =>
       option
         .setName("amount")
-        .setDescription("Max amount of spots available..")
+        .setDescription("Amount of tokens the user will get")
         .setRequired(true)
     )
     .addIntegerOption((option) =>
       option
         .setName("price")
-        .setDescription("Amount of Faith to pay")
+        .setDescription("Amount of XP the user as to pay")
         .setRequired(true)
     ),
   async execute(interaction) {
@@ -46,8 +38,7 @@ module.exports = {
       return await interaction.editReply({ embeds: [perm], ephemeral: true });
 
     const { guild } = interaction;
-    const category = "Whitelists";
-    const name = interaction.options.getString("name");
+    const category = "Tokens";
     const price = interaction.options.getInteger("price");
     const amount = interaction.options.getInteger("amount");
     let tokens = 0;
@@ -56,7 +47,7 @@ module.exports = {
       .setColor("Blue")
       .setTitle(`Tokens have been restocked!`)
       .setDescription(
-        `You have successfully restocked role: ${amount} x ${name} for ${price} faith`
+        `You have successfully restocked tokens: ${amount} for ${price} XP`
       )
       .setTimestamp()
       .setFooter({ text: "Product restock" });
@@ -65,20 +56,18 @@ module.exports = {
       {
         Guild: guild.id,
         Category: category,
-        Name: name,
+        Tokens: amount,
+        Price: price,
       },
       async (err, data) => {
         if (err) throw err;
         if (!data) {
-          //
-          const role = await guild.roles.create({ name: name });
-
           return await storeSchema.create({
             Guild: guild.id,
-            Name: name,
             Cat: category,
             Price: price,
-            Amount: amount,
+            Tokens: amount,
+            Amount: -1,
           });
         } else {
           data.Amount += amount;

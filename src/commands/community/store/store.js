@@ -1,6 +1,6 @@
 const { EmbedBuilder, SlashCommandBuilder } = require("discord.js");
-const { execute } = require("../../events/client/ready");
-const shopSchema = require("../../schemas/shop");
+const { execute } = require("../../../events/client/ready");
+const shopSchema = require("../../../schemas/shop");
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -78,7 +78,7 @@ module.exports = {
 
       for (const result of results) {
         names += result.Name + "\n";
-        prices += result.Price + "\n";
+        prices += result.Price + "<:faith:1081970270564257912>" + "\n";
         amount += result.Amount + "\n";
       }
 
@@ -107,7 +107,11 @@ module.exports = {
         .setColor("Blue")
         .setFields(
           { name: "Items", value: `${shopItems}`, inline: true },
-          { name: "Price", value: `${prices}`, inline: true }
+          {
+            name: "Price",
+            value: `${prices} <:faith:1081970270564257912>`,
+            inline: true,
+          }
         );
 
       return await interaction.editReply({ embeds: [embed] });

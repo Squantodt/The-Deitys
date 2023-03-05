@@ -4,26 +4,24 @@ const {
   AttachmentBuilder,
   PermissionsBitField,
 } = require("discord.js");
-const storeSchema = require("../../schemas/shop");
+const storeSchema = require("../../../schemas/shop");
 
 module.exports = {
   data: new SlashCommandBuilder()
-    .setName("restock-role")
+    .setName("store-restock-whitelist")
     .setDescription("Restock the shop with roles and whitelists.")
     .addStringOption((option) =>
       option
         .setName("name")
         .setDescription(
-          "Name for the role. If it doesn't exist this will be created without permissions"
+          "Project name. A role will be created under the same name."
         )
         .setRequired(true)
     )
     .addIntegerOption((option) =>
       option
         .setName("amount")
-        .setDescription(
-          "Max amount of roles available. Use -1 to use infinite."
-        )
+        .setDescription("Max amount of spots available..")
         .setRequired(true)
     )
     .addIntegerOption((option) =>
@@ -34,6 +32,7 @@ module.exports = {
     ),
   async execute(interaction) {
     await interaction.deferReply();
+
     const perm = new EmbedBuilder()
       .setColor("Blue")
       .setDescription(
@@ -47,7 +46,7 @@ module.exports = {
       return await interaction.editReply({ embeds: [perm], ephemeral: true });
 
     const { guild } = interaction;
-    const category = "Roles";
+    const category = "Whitelists";
     const name = interaction.options.getString("name");
     const price = interaction.options.getInteger("price");
     const amount = interaction.options.getInteger("amount");
@@ -55,9 +54,9 @@ module.exports = {
 
     const embed = new EmbedBuilder()
       .setColor("Blue")
-      .setTitle(`Role has been restocked!`)
+      .setTitle(`Tokens have been restocked!`)
       .setDescription(
-        `You have successfully restocked role: ${amount} x ${name} for ${price} faith`
+        `You have successfully restocked role: ${amount} x ${name} for ${price} <:faith:1081970270564257912>`
       )
       .setTimestamp()
       .setFooter({ text: "Product restock" });
@@ -73,6 +72,7 @@ module.exports = {
         if (!data) {
           //
           const role = await guild.roles.create({ name: name });
+
           return await storeSchema.create({
             Guild: guild.id,
             Name: name,

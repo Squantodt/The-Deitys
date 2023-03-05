@@ -76,7 +76,7 @@ module.exports = {
       //Delete item if amount = 0
       item.Amount -= 1;
       if (item.Amount === 0) {
-        await shopSchema.deleteOne(item);
+        await shopSchema.deleteOne(item._id);
       } else {
         item.save();
       }
@@ -218,7 +218,7 @@ module.exports = {
         //Delete item if amount = 0
         item.Amount -= 1;
         if (item.Amount === 0) {
-          await shopSchema.deleteOne(item);
+          await shopSchema.deleteOne(item._id);
         } else {
           item.save();
         }
@@ -227,7 +227,7 @@ module.exports = {
           .setColor("Blue")
           .setTitle("Purchase completed")
           .setDescription(
-            `You have successfully bought role: ${item.Name} for ${item.Price} Belief.`
+            `You have successfully bought role: ${item.Name} for ${item.Price} <:faith:1081970270564257912>.`
           );
 
         return await interaction.update({

@@ -7,7 +7,7 @@ const {
 
 module.exports = {
   data: {
-    name: `purchase-menu`,
+    name: `shop-remove-menu`,
   },
   async execute(interaction, client) {
     const { guild, message } = interaction;
@@ -45,8 +45,8 @@ module.exports = {
     }
 
     const roleMenu = new StringSelectMenuBuilder()
-      .setCustomId(`purchase-item`)
-      .setPlaceholder(`Purchase ${interaction.values[0]}`)
+      .setCustomId(`remove-item`)
+      .setPlaceholder(`Remove ${interaction.values[0]}`)
       .setMinValues(1)
       .setMaxValues(1)
       .addOptions(menuOptions);
