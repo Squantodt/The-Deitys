@@ -42,7 +42,6 @@ module.exports = {
       client
     );
     const allowedChannels = await client.getXPChannels(interaction.guild.id);
-    console.log(allowedChannels);
     if (allowedChannels.includes(chan_id)) {
       const perm = new EmbedBuilder()
         .setColor("Blue")

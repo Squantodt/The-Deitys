@@ -32,6 +32,7 @@ module.exports = {
     ),
   async execute(interaction) {
     await interaction.deferReply();
+
     const perm = new EmbedBuilder()
       .setColor("Blue")
       .setDescription(
@@ -45,7 +46,7 @@ module.exports = {
       return await interaction.editReply({ embeds: [perm], ephemeral: true });
 
     const { guild } = interaction;
-    const category = "Whitelist";
+    const category = "Whitelists";
     const name = interaction.options.getString("name");
     const price = interaction.options.getInteger("price");
     const amount = interaction.options.getInteger("amount");

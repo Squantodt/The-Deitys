@@ -26,7 +26,6 @@ module.exports = {
       await interaction.reply({
         content: `Server ID: ${guildProfile.guildId}`,
       });
-      console.log(guildProfile);
     }
   },
 };

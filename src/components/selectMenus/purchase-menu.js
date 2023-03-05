@@ -23,7 +23,6 @@ module.exports = {
       .setFooter({ text: "Store" });
 
     const results = data.filter((data) => data.Cat == interaction.values[0]);
-    console.log(data);
     if (results.length == 0)
       return await interaction.update({ embeds: [embed1], components: [] });
 

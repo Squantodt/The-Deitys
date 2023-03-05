@@ -1,3 +1,16 @@
+const {
+  EmbedBuilder,
+  ActionRowBuilder,
+  StringSelectMenuBuilder,
+  ModalBuilder,
+  TextInputBuilder,
+  TextInputStyle,
+  ChannelType,
+  PermissionFlagsBits,
+} = require("discord.js");
+const unhandledSchema = require("../../schemas/unhandledwl");
+const shopSchema = require("../../schemas/shop");
+
 module.exports = {
   data: {
     name: `walletmodal`,
@@ -5,15 +18,21 @@ module.exports = {
   async execute(interaction, client) {
     //get inputs
     const address = interaction.fields.getTextInputValue("wallet");
-    console.log(interaction);
+    const { message, guild, user } = interaction;
+
+    //get user unhandled wl and delete
+    const unhandledItem = await client.getUnhandled(user.id, guild.id);
+
+    console.log(unhandledItem);
+    const channel = client.channels.cache.get(unhandledItem.channelId);
+
+    channel.send(`Their wallet address is: ${address}`);
 
     //return good message
     const successEmbed = new EmbedBuilder()
       .setColor("Blue")
       .setTitle("Purchase completed")
-      .setDescription(
-        `You have successfully bought role: ${item.Name} for ${item.Price} Belief.`
-      );
+      .setDescription(`You have successfully bought this whitelist`);
 
     return await interaction.update({
       embeds: [successEmbed],

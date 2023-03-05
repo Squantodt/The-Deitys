@@ -36,7 +36,6 @@ module.exports = {
         `:white_check_mark: ${member} has not earned any coins yet...`
       );
     if (!data) return await interaction.editReply({ embeds: [embed] });
-    console.log(data);
     const embed2 = new EmbedBuilder()
       .setColor("Blue")
       .setTitle(`${member.user.username}'s balance`)
