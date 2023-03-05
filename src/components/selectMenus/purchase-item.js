@@ -2,7 +2,6 @@ const shopSchema = require("../../schemas/shop");
 const walletSchema = require("../../schemas/wallet");
 const levelSchema = require("../../schemas/level");
 const wlSchema = require("../../schemas/whitelist");
-const unhandledSchema = require("../../schemas/unhandledwl");
 
 const {
   EmbedBuilder,
@@ -122,12 +121,6 @@ module.exports = {
           await wallet.save();
 
           await wlSchema.create({
-            Guild: guild.id,
-            User: user.id,
-            ItemId: item._id,
-          });
-          //Create unhandled item
-          await unhandledSchema.create({
             Guild: guild.id,
             User: user.id,
             ItemId: item._id,
