@@ -162,7 +162,7 @@ module.exports = {
 
         //create channel in category
         let channel = await thisGuild.channels.create({
-          name: `${interaction.user.tag}${rand}`,
+          name: `${item.Name}${rand}`,
           type: ChannelType.GuildText,
           parent: category,
           permissionOverwrites: [

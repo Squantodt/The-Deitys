@@ -53,6 +53,12 @@ module.exports = {
     const amount = interaction.options.getInteger("amount");
     let tokens = 0;
 
+    let embedAmount = amount;
+
+    if (amount === -1) {
+      embedAmount = infinite;
+    }
+
     const embed = new EmbedBuilder()
       .setColor("Blue")
       .setTitle(`Role has been restocked!`)

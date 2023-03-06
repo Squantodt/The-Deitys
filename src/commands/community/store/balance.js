@@ -27,7 +27,7 @@ module.exports = {
 
     const data = await walletSchema.findOne({
       Guild: guild.id,
-      User: user.id,
+      User: member.id,
     });
 
     const embed = new EmbedBuilder()

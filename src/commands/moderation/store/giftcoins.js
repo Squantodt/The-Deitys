@@ -77,7 +77,7 @@ module.exports = {
       .setColor("Blue")
       .setTitle(`Gift coins!`)
       .setDescription(
-        `You have successfully gifted ${amount} <:faith:1081970270564257912> to ${interaction.user.tag}`
+        `You have successfully gifted ${amount} <:faith:1081970270564257912> to ${member.user.tag}`
       )
       .setTimestamp()
       .setFooter({ text: "Product restock" });

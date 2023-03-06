@@ -9,8 +9,17 @@ module.exports = (client) => {
   };
 
   client.getUnhandled = async (userId, guildId) => {
-    return client.unhandled.find(
+    // Find the unhandled object
+    const unhandledIndex = client.unhandled.findIndex(
       (user) => user.userId === userId && user.guildId === guildId
     );
+
+    // Remove the unhandled object from the array
+    if (unhandledIndex !== -1) {
+      const unhandled = client.unhandled.splice(unhandledIndex, 1)[0];
+      return unhandled;
+    } else {
+      return null;
+    }
   };
 };

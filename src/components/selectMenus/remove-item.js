@@ -28,7 +28,7 @@ module.exports = {
 
     const successEmbed = new EmbedBuilder()
       .setColor("Blue")
-      .setTitle("Purchase completed")
+      .setTitle("Removal completed")
       .setDescription(
         `You have successfully removed this item from the shops.`
       );

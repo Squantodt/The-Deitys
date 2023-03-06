@@ -48,9 +48,14 @@ module.exports = {
       let amount = "";
 
       for (const result of results) {
+        let buf = result.Amount;
+
+        if (result.Amount === -1) {
+          buf = "infinite";
+        }
         roles += result.Name + "\n";
-        prices += result.Price + "\n";
-        amount += result.Amount + "\n";
+        prices += result.Price + `<:faith:1081970270564257912> \n`;
+        amount += buf + "\n";
       }
 
       const embedRoleStore = new EmbedBuilder()

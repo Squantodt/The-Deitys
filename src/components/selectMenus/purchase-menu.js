@@ -31,13 +31,13 @@ module.exports = {
     for (const result of results) {
       if (interaction.values[0] === "Tokens") {
         const menuOption = {
-          label: `"${result.Tokens} tokens for ${result.Price} XP"`,
+          label: `${result.Tokens} tokens for ${result.Price} XP`,
           value: `${result._id}`,
         };
         menuOptions.push(menuOption);
       } else {
         const menuOption = {
-          label: `"${result.Name} for ${result.Price} <:faith:1081970270564257912>"`,
+          label: `${result.Name} for ${result.Price} Faith`,
           value: `${result._id}`,
         };
         menuOptions.push(menuOption);
