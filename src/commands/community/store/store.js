@@ -101,10 +101,18 @@ module.exports = {
 
       return await interaction.editReply({ embeds: [embedWlStore] });
     } else if (interaction.options.getSubcommand() === "tokens") {
-      const shopItems =
-        "10 tokens \n" + "30 tokens \n" + "70 tokens \n" + "100 tokens";
-      const prices =
-        "5 levels \n" + "7 levels \n" + "10 levels \n" + "13 levels";
+      let prices = "";
+
+      const results = data.filter((data) => data.Cat == "Tokens");
+      if (results.length == 0)
+        return await interaction.editReply({ embeds: [embed1] });
+      let names = "";
+      let shopItems = "";
+
+      for (const result of results) {
+        prices += result.Price + " XP" + "\n";
+        shopItems += result.Tokens + " <:faith:1081970270564257912> \n";
+      }
 
       const embed = new EmbedBuilder()
         .setTitle("Token Shop")
@@ -114,7 +122,7 @@ module.exports = {
           { name: "Items", value: `${shopItems}`, inline: true },
           {
             name: "Price",
-            value: `${prices} <:faith:1081970270564257912>`,
+            value: `${prices}`,
             inline: true,
           }
         );

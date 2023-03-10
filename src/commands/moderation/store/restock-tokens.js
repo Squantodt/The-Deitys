@@ -47,7 +47,7 @@ module.exports = {
       .setColor("Blue")
       .setTitle(`Tokens have been restocked!`)
       .setDescription(
-        `You have successfully restocked tokens: ${amount} for ${price} XP`
+        `You have successfully restocked tokens: ${amount} <:faith:1081970270564257912> for ${price} XP`
       )
       .setTimestamp()
       .setFooter({ text: "Product restock" });

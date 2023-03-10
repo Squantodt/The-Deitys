@@ -34,7 +34,7 @@ module.exports = {
     const target = interaction.options.getUser("user");
 
     levelSchema.deleteOne(
-      { Guild: guildId, user: target.id },
+      { Guild: guildId, User: target.id },
       async (err, data) => {
         const embed = new EmbedBuilder()
           .setColor("Blue")
