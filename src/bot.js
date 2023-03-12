@@ -58,7 +58,7 @@ client.on("messageCreate", async (message) => {
     async (err, data) => {
       if (err) throw err;
 
-      if (!data) {
+      if (!data && channelsArray.includes(channel.id)) {
         levelSchema.create({
           Guild: guild.id,
           User: author.id,
