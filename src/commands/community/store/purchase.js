@@ -34,6 +34,11 @@ module.exports = {
           description: "Purchase whitelists from the shop",
           value: "Whitelists",
         },
+        {
+          label: "Items",
+          description: "Purchase items from the shop",
+          value: "Items",
+        },
       ]);
 
     await interaction.editReply({

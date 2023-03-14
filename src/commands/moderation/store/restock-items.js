@@ -8,20 +8,15 @@ const storeSchema = require("../../../schemas/shop");
 
 module.exports = {
   data: new SlashCommandBuilder()
-    .setName("store-restock-whitelist")
-    .setDescription("Restock the shop with roles and whitelists.")
+    .setName("store-restock-items")
+    .setDescription("Restock the shop with items.")
     .addStringOption((option) =>
-      option
-        .setName("name")
-        .setDescription(
-          "Project name. A role will be created under the same name."
-        )
-        .setRequired(true)
+      option.setName("name").setDescription("Item name").setRequired(true)
     )
     .addIntegerOption((option) =>
       option
         .setName("amount")
-        .setDescription("Max amount of spots available..")
+        .setDescription("Amount of items available (use -1 for infinite)")
         .setRequired(true)
     )
     .addIntegerOption((option) =>
@@ -46,7 +41,7 @@ module.exports = {
       return await interaction.editReply({ embeds: [perm], ephemeral: true });
 
     const { guild } = interaction;
-    const category = "Whitelists";
+    const category = "Items";
     const name = interaction.options.getString("name");
     const price = interaction.options.getInteger("price");
     const amount = interaction.options.getInteger("amount");
@@ -56,7 +51,7 @@ module.exports = {
       .setColor("Blue")
       .setTitle(`Tokens have been restocked!`)
       .setDescription(
-        `You have successfully restocked whitelist: ${amount} x ${name} for ${price} <:faith:1081970270564257912>`
+        `You have successfully restocked item: ${amount} x ${name} for ${price} <:faith:1081970270564257912>`
       )
       .setTimestamp()
       .setFooter({ text: "Product restock" });

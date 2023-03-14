@@ -20,6 +20,11 @@ module.exports = {
       subcommand
         .setName("tokens")
         .setDescription("Exchange your XP for tokens.")
+    )
+    .addSubcommand((subcommand) =>
+      subcommand
+        .setName("items")
+        .setDescription("Exchange your tokens for items.")
     ),
   async execute(interaction, client) {
     await interaction.deferReply();
@@ -128,6 +133,38 @@ module.exports = {
         );
 
       return await interaction.editReply({ embeds: [embed] });
+    } else if (interaction.options.getSubcommand() === "items") {
+      const results = data.filter((data) => data.Cat == "Items");
+      if (results.length == 0)
+        return await interaction.editReply({ embeds: [embed1] });
+      let roles = "";
+      let prices = "";
+      let amount = "";
+
+      for (const result of results) {
+        let buf = result.Amount;
+
+        if (result.Amount === -1) {
+          buf = "infinite";
+        }
+        roles += result.Name + "\n";
+        prices += result.Price + `<:faith:1081970270564257912> \n`;
+        amount += buf + "\n";
+      }
+
+      const embedRoleStore = new EmbedBuilder()
+        .setColor("Blue")
+        .setTitle(`Role Store`)
+        .setDescription(`Overview of roles available for purchase`)
+        .addFields(
+          { name: "Items", value: roles, inline: true },
+          { name: "Price", value: prices, inline: true },
+          { name: "Amount", value: amount, inline: true }
+        )
+        .setTimestamp()
+        .setFooter({ text: "Role store" });
+
+      return await interaction.editReply({ embeds: [embedRoleStore] });
     }
   },
 };
