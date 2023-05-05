@@ -21,8 +21,7 @@ module.exports = {
     const data = await levelSchema
       .find({ Guild: guild.id })
       .sort({
-        XP: -1,
-        Level: -1,
+        TotalXP: -1,
       })
       .limit(10);
 

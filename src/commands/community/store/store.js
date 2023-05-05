@@ -70,7 +70,7 @@ module.exports = {
         .addFields(
           { name: "Roles", value: roles, inline: true },
           { name: "Price", value: prices, inline: true },
-          { name: "Amount", value: amount, inline: true }
+          { name: "Remaining", value: amount, inline: true }
         )
         .setTimestamp()
         .setFooter({ text: "Role store" });
@@ -99,7 +99,7 @@ module.exports = {
         .addFields(
           { name: "Proj Name", value: names, inline: true },
           { name: "Price", value: prices, inline: true },
-          { name: "Amount", value: amount, inline: true }
+          { name: "Remaining", value: amount, inline: true }
         )
         .setTimestamp()
         .setFooter({ text: "Role store" });
@@ -120,7 +120,7 @@ module.exports = {
       }
 
       const embed = new EmbedBuilder()
-        .setTitle("Token Shop")
+        .setTitle("Token Exchange")
         .setDescription("Buy tokens using your earned levels")
         .setColor("Blue")
         .setFields(
@@ -154,12 +154,12 @@ module.exports = {
 
       const embedRoleStore = new EmbedBuilder()
         .setColor("Blue")
-        .setTitle(`Role Store`)
+        .setTitle(`Item Store`)
         .setDescription(`Overview of roles available for purchase`)
         .addFields(
           { name: "Items", value: roles, inline: true },
           { name: "Price", value: prices, inline: true },
-          { name: "Amount", value: amount, inline: true }
+          { name: "Remaining", value: amount, inline: true }
         )
         .setTimestamp()
         .setFooter({ text: "Role store" });

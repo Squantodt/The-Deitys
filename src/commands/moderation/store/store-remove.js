@@ -11,14 +11,14 @@ const storeSchema = require("../../../schemas/shop");
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("store-remove")
-    .setDescription("Restock the shop with tokens users can buy with XP."),
+    .setDescription("Remove item from the shop."),
   async execute(interaction) {
     await interaction.deferReply();
 
     const perm = new EmbedBuilder()
       .setColor("Blue")
       .setDescription(
-        `:white_check_mark: You don't have permissions to restock the shops`
+        `:white_check_mark: You don't have permissions to remove itoms from the shop`
       );
     if (
       !interaction.member.permissions.has(
@@ -48,6 +48,11 @@ module.exports = {
           label: "Whitelists",
           description: "Remove whitelists from the shop",
           value: "Whitelists",
+        },
+        {
+          label: "Items",
+          description: "Remove whitelists from the shop",
+          value: "Items",
         },
       ]);
 

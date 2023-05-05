@@ -24,7 +24,7 @@ module.exports = {
     const item = await shopSchema.findOne({
       _id: interaction.values[0],
     });
-    const wallet = await walletSchema.findOne({
+    let wallet = await walletSchema.findOne({
       Guild: guild.id,
       User: user.id,
     });
@@ -51,7 +51,7 @@ module.exports = {
 
       //recalculate level based on XP left
       let requiredXP = userLevel.Level * userLevel.Level * 20 + 20;
-      userLevel.XP = user.TotalXP ?? 0;
+      userLevel.XP = userLevel.TotalXP ?? 0;
       userLevel.Level = 0;
       while (userLevel.XP >= requiredXP) {
         userLevel.Level += 1;

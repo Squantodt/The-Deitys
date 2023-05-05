@@ -38,11 +38,14 @@ module.exports = {
 
     const rank = new canvaCord.Rank()
       .setAvatar(member.displayAvatarURL({ forceStatic: true }))
-      .setBackground("IMAGE", "https://iili.io/HMijkT7.png")
+      .setBackground("IMAGE", "https://i.imgur.com/tXs59fW.png")
       .setCurrentXP(data.XP)
       .setRequiredXP(requiredXP)
       .setRank(1, "Rank", false)
-      .setLevel(data.Level, "Level")
+      .setLevel(
+        data.Level,
+        `Tot. XP: ${data.TotalXP}            Level                                    `
+      )
       .setUsername(member.user.username)
       .setDiscriminator(member.user.discriminator);
 
