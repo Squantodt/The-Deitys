@@ -38,7 +38,7 @@ module.exports = {
 
     const rank = new canvaCord.Rank()
       .setAvatar(member.displayAvatarURL({ forceStatic: true }))
-      .setBackground("IMAGE", "https://i.imgur.com/tXs59fW.png")
+      .setBackground("IMAGE", "https://iili.io/HU0NRku.md.png")
       .setCurrentXP(data.XP)
       .setRequiredXP(requiredXP)
       .setRank(1, "Rank", false)

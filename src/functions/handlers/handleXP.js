@@ -3,7 +3,6 @@ module.exports = (client) => {
 
   // Set XP for a user
   client.setXP = (xp) => {
-    console.log(xp);
     client.XP = xp;
   };
 

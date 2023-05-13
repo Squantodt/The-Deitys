@@ -14,7 +14,7 @@ module.exports = {
     const data = await shopSchema.find({
       Guild: guild.id,
     });
-    const results = data.filter((data) => data.Cat == "Roles");
+    const results = data.filter((data) => data.Cat == "Tokens");
 
     const embed1 = new EmbedBuilder()
       .setColor("Blue")
