@@ -4,7 +4,10 @@ const {
   PermissionsBitField,
   roleMention,
 } = require("discord.js");
-const { updateMultiplier } = require("../../../helperFunctions/xpmultiplier");
+const {
+  updateMultiplier,
+  clearMultiplier,
+} = require("../../../helperFunctions/xpmultiplier");
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -47,7 +50,7 @@ module.exports = {
       client.setXP(multiplier);
 
       const embed = new EmbedBuilder()
-        .setColor("Blue")
+        .setColor("Green")
         .setDescription(
           `:white_check_mark: The XP system in your server has been updated! XP multiplier is now ${multiplier}`
         );
@@ -55,9 +58,18 @@ module.exports = {
       await interaction.editReply({ embeds: [embed] });
     } else {
       const { guild } = interaction;
-      const filter = { Role: role };
+      const filter = { Role: role, GuildId: guild.id };
       const update = { Multiplier: multiplier };
       const roleName = guild.roles.cache.get(role);
+      if (multiplier === 1) {
+        await clearMultiplier(filter);
+        const unknownRoleEmbed = new EmbedBuilder()
+          .setColor("Green")
+          .setDescription(
+            `:warning: The XP multiplier of the following role: ${roleName} has been reset to 1`
+          );
+        return interaction.editReply({ embeds: [unknownRoleEmbed] });
+      }
       await updateMultiplier(filter, update);
       if (typeof roleName === "undefined") {
         const unknownRoleEmbed = new EmbedBuilder()
@@ -69,7 +81,7 @@ module.exports = {
       }
 
       const embed = new EmbedBuilder()
-        .setColor("Blue")
+        .setColor("Green")
         .setDescription(
           `:white_check_mark: The XP system in your server has been updated! XP multiplier for role: ${roleName} is now ${multiplier}`
         );

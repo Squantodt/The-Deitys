@@ -9,6 +9,7 @@ const {
   Events,
 } = require("discord.js");
 const fs = require("fs");
+const { getMultiplier } = require("./helperFunctions/xpmultiplier");
 
 const client = new Client({
   intents: [
@@ -51,7 +52,7 @@ client.on("messageCreate", async (message) => {
   if (author.bot || !guild) return;
 
   const channel = message.channel;
-  const give = client.XP;
+  const give = await getMultiplier(author.id, guild, client);
 
   levelSchema.findOne(
     { Guild: guild.id, User: author.id },

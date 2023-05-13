@@ -14,16 +14,34 @@ const updateMultiplier = async (filter, update) => {
   return result;
 };
 
-const getMultiplier = async (user) => {
-  const multipliers = await getAllMultipliers();
+const clearMultiplier = async (filter) => {
+  const result = await multiplierSchema
+    .deleteOne({
+      GuildId: filter.GuildId,
+      Role: filter.Role,
+    })
+    .exec();
+
+  return result;
+};
+
+const getMultiplier = async (userID, guild, client) => {
+  const multipliers = await getAllMultipliers(guild);
+  const member = guild.members.cache.get(userID);
 
   // get all role id's of a user
   // loop over multipliers until 1 is found and return that multiplier
+  for (const multiplier of multipliers) {
+    if (member._roles.includes(multiplier.Role)) {
+      return multiplier.Multiplier;
+    }
+  }
+  return client.getXP();
 };
 
-const getAllMultipliers = async () => {
+const getAllMultipliers = async (guild) => {
   const multipliers = await multiplierSchema
-    .find()
+    .find({ GuildId: guild.id })
     .sort({ Multiplier: -1 })
     .exec();
   return multipliers;
@@ -39,4 +57,5 @@ const getAllMultipliers = async () => {
 module.exports = {
   updateMultiplier,
   getMultiplier,
+  clearMultiplier,
 };

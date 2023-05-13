@@ -14,6 +14,7 @@ const levelSchema = new Schema({
 
 levelSchema.methods.canEarnXP = function () {
   const now = new Date();
+  console.log(this.LastModified);
   return now - this.LastModified >= 60000; // 60000ms = 1 minute
 };
 
