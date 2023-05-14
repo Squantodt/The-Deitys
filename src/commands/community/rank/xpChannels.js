@@ -29,7 +29,7 @@ module.exports = {
     }
 
     const embed = new EmbedBuilder()
-      .setColor("BLUE")
+      .setColor("Blue")
       .setDescription(`List of channels XP can be earned in`)
       .addFields({
         name: "Channel name",
