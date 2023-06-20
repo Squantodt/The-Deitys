@@ -17,12 +17,13 @@ module.exports = {
 
     const embed1 = new EmbedBuilder()
       .setColor("Blue")
-      .setTitle(`Role Store!`)
+      .setTitle(`Faith Store!`)
       .setDescription(`Nothing to see here yet...`)
       .setTimestamp()
       .setFooter({ text: "Store" });
 
     const results = data.filter((data) => data.Cat == interaction.values[0]);
+
     if (results.length == 0)
       return await interaction.update({ embeds: [embed1], components: [] });
 

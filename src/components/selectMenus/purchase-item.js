@@ -206,13 +206,25 @@ module.exports = {
         return await interaction.showModal(modal);
       } else if (item.Cat == "Roles") {
         //write check if role already bought
+        const role = guild.roles.cache.find((r) => r.name === item.Name);
+        const alreadyPurchasedEmbed = new EmbedBuilder()
+          .setColor("Red")
+          .setTitle("Already purchased")
+          .setDescription(
+            `It seems like you already have purchased the ${item.Name} role`
+          );
+        if (member.roles.cache.has(role.id)) {
+          return await interaction.update({
+            embeds: [alreadyPurchasedEmbed],
+            components: [],
+          });
+        }
 
         //Take coins
         wallet.Coins -= item.Price;
         await wallet.save();
 
         //Give role
-        const role = guild.roles.cache.find((r) => r.name === item.Name);
         member.roles.add(role).catch(console.error);
 
         //Delete item if amount = 0
