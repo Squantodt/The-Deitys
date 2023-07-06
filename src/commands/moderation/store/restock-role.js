@@ -77,7 +77,6 @@ module.exports = {
       async (err, data) => {
         if (err) throw err;
         if (!data) {
-          //
           const role = await guild.roles.create({ name: name });
           return await storeSchema.create({
             Guild: guild.id,

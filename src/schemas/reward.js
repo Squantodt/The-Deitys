@@ -4,7 +4,7 @@ const rewardSchema = new Schema({
   GuildId: String,
   Time: String,
   Amount: Number,
-  Role: Number,
+  Role: String,
 });
 
 module.exports = model("Reward", rewardSchema, "rewards");

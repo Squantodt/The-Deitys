@@ -36,18 +36,16 @@ module.exports = {
     await interaction.deferReply();
     const requiredXP = data.Level * data.Level * 20 + 20;
 
+    console.log(data.Level);
+
     const rank = new canvaCord.Rank()
       .setAvatar(member.displayAvatarURL({ forceStatic: true }))
-      .setBackground("IMAGE", "https://iili.io/HU0NRku.md.png")
+      .setBackground("IMAGE", "https://iili.io/HsdaV2I.png")
       .setCurrentXP(data.XP)
       .setRequiredXP(requiredXP)
-      .setRank(1, "Rank", false)
-      .setLevel(
-        data.Level,
-        `Tot. XP: ${data.TotalXP}            Level                                    `
-      )
-      .setUsername(member.user.username)
-      .setDiscriminator(member.user.discriminator);
+      .setRank(5, "Rank", false)
+      .setLevel(data.Level)
+      .setUsername(member.user.username);
 
     const card = await rank.build();
 
