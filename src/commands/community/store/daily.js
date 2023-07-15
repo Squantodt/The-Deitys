@@ -78,19 +78,18 @@ module.exports = {
 
     // Update the claim record with the current time or create a new claim record
     if (lastClaim) {
-      lastClaim.createdAt = currentTime;
+      lastClaim.date = currentTime;
       await lastClaim.save();
     } else {
       await claimSchema.create({
         GuildId: guild.id,
         User: member.id,
         Timeframe: "Daily",
-        createdAt: currentTime,
+        date: currentTime,
       });
     }
 
     // Update or create the wallet record if it doesn't exist
-    console.log(walletData);
     if (walletData) {
       walletData.Coins += reward;
       await walletData.save();

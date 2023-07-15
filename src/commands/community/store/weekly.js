@@ -26,7 +26,7 @@ module.exports = {
     });
 
     const results = await rewardSchema
-      .find({ GuildId: guild.id, Time: "daily" })
+      .find({ GuildId: guild.id, Time: "weekly" })
       .sort({ Amount: -1 });
 
     const getDailyRewards = async () => {
@@ -75,14 +75,14 @@ module.exports = {
 
     // Update the claim record with the current time or create a new claim record
     if (lastClaim) {
-      lastClaim.createdAt = currentTime;
+      lastClaim.date = currentTime;
       await lastClaim.save();
     } else {
       await claimSchema.create({
         GuildId: guild.id,
         User: member.id,
         Timeframe: "Weekly",
-        createdAt: currentTime,
+        date: currentTime,
       });
     }
 
